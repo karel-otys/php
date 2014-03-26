@@ -137,6 +137,15 @@ abstract class Server
 				if (!$useFullName) {
 					$this->aliases[$method->getName()] = $func;
 					$func = $method->getName();
+				}  else {
+					// hack: change \namespace1\namespace2\class:method to namespace1.namespace2.class.method
+					if (strpos($class, '\\')!==false) {
+						$class2=str_replace('\\', '.', $class);
+						if (substr($class2, 0, 1)=='.') $class2=substr($class2, 1);
+						$this->aliases["$class2.".$method->getName()] = $func;
+						$func = "$class2.".$method->getName();
+					}
+					
 				}
 
 				$this->register($func);
@@ -182,6 +191,14 @@ abstract class Server
 		if (!$useFullName) {
 			$this->aliases[$method] = $func;
 			$func = $method;
+		} else {
+			// hack: change \namespace1\namespace2\class:method to namespace1.namespace2.class.method
+			if (strpos($class, '\\')!==false) {
+				$class2=str_replace('\\', '.', $class);
+				if (substr($class2, 0, 1)=='.') $class2=substr($class2, 1);
+				$this->aliases["$class2.".$method] = $func;
+				$func = "$class2.".$method;
+			}
 		}
 
 		$this->register($func);

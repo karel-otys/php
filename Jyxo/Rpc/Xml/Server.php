@@ -79,4 +79,30 @@ class Server extends \Jyxo\Rpc\Server
 		header('Content-Type: text/xml; charset="utf-8"');
 		echo $response;
 	}
+	
+	static function fixXmlrpcArgs($array) {
+		if (!is_array($array))
+			return $array;
+		
+		
+		$new = array();
+		$range = range(0, count($array) - 1);
+		if (array_keys($array) === $range) { # just array
+			foreach ($array as $val)
+				$new[] = self::fixXmlrpcArgs($val);
+	
+		} else { # structure
+			foreach ($array as $key => $val)
+				$new[$key. chr(0x00)] = self::fixXmlrpcArgs($val);
+	
+		}
+	
+		return $new;
+	}
+	
+	protected function call($method, $params) {
+		$out=parent::call($method, $params);
+		$out=self::fixXmlrpcArgs($out);
+		return $out;
+	}
 }
