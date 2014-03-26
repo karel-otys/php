@@ -1,5 +1,7 @@
 # Jyxo PHP Library
 
+(This is the forked version with some hacks and improvements for OTYS project)
+
 Welcome to Jyxo PHP Library.
 
 A long time ago, in a galaxy far far away... there has been an IT company
