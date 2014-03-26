@@ -1,5 +1,5 @@
 {
-	"name": "jyxo/php",
+	"name": "otys/jyxo",
 	"type": "library",
 	"description": "Jyxo PHP Library",
 	"keywords": ["php", "jyxo", "rpc", "gettext", "webdav", "beholder", "svn", "shell"],
