@@ -52,9 +52,13 @@ class Client extends \Jyxo\Rpc\Client
 					'id' => $id
 				)
 			);
+			
+			//var_dump($data);
 
 			// Fetch response
 			$response = $this->process('application/json', $data);
+			
+			//var_dump($response);
 
 			// Process response
 			$response = json_decode($response, true);
@@ -82,9 +86,10 @@ class Client extends \Jyxo\Rpc\Client
 			throw new Exception(preg_replace('~\s+~', ' ', $response['error']['message']), $response['error']['code']);
 		}
 
-		if (!isset($response['result'])) {
-			throw new Exception('No response data.');
-		}
+        if (!array_key_exists('result', $response)) {
+            throw new Exception('No response data.');
+        }
+
 
 		return $response['result'];
 	}

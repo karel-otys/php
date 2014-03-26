@@ -61,7 +61,10 @@ class Client extends \Jyxo\Rpc\Client
 
 		try {
 			// Fetch response
-			$response = $this->process('text/xml', xmlrpc_encode_request($method, $params, $this->options));
+			$req = xmlrpc_encode_request($method, $params, $this->options);
+//  			var_dump($req);
+			$response = $this->process('text/xml', $req);
+            //var_dump($response);
 
 			// Process response
 			$response = xmlrpc_decode($response, 'utf-8');

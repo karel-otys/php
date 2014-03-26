@@ -86,10 +86,11 @@ class Server extends \Jyxo\Rpc\Server
 
 			// Request processing
 			$params = !empty($data['params']) ? (array) $data['params'] : array();
+			//throw new \Otys\Models\Exception("sdfsdfsdfweefwefwef");
 			$response = $this->call($data['method'], $params);
 			$response = array('result' => $response, 'id' => $data['id']);
 
-		} catch (\Jyxo\Rpc\Json\Exception $e) {
+		} catch (\Exception $e) {
 			$response = array(
 				'error' => array(
 					'message' => $e->getMessage(),
